@@ -4,3 +4,4 @@ part of 'register_bloc.dart';
 abstract class RegisterEvent {}
 class RegisterHidePassEvent extends RegisterEvent{}
 class RegisterButtonPassEvent extends RegisterEvent{}
+class RegisterCreateUserEvent extends RegisterEvent{}

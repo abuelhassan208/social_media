@@ -4,7 +4,6 @@ import 'package:social_media/widgets/public_text_form_field.dart';
 
 class RegisterFrom extends StatelessWidget {
   final RegisterBloc bloc;
-
   const RegisterFrom({Key? key, required this.bloc}) : super(key: key);
 
   @override

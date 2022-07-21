@@ -14,9 +14,14 @@ class RegisterBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<RegisterBloc, RegisterState>(
       listener: (context, state) {
+        RegisterBloc bloc = RegisterBloc.of(context);
         if (state is RegisterSuccessState) {
+          bloc.add(RegisterCreateUserEvent());
+        } else if (state is CreateUserSuccessState) {
           Navigation.push(context, const LoginView());
         } else if (state is RegisterErrorState) {
+          publicSnackBarAlert(context: context, text: state.error);
+        } else if (state is CreateUserErrorState) {
           publicSnackBarAlert(context: context, text: state.error);
         }
       },
@@ -31,16 +36,21 @@ class RegisterBody extends StatelessWidget {
                 children: [
                   Text(
                     'Register',
-                    style: Theme.of(context)
+                    style: Theme
+                        .of(context)
                         .textTheme
                         .headline4
                         ?.copyWith(color: Colors.teal),
                   ),
                   Text(
                     'Register now to browse our hot offers',
-                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                          color: Colors.grey,
-                        ),
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .bodyText2!
+                        .copyWith(
+                      color: Colors.grey,
+                    ),
                   ),
                   const SizedBox(
                     height: 30.0,
@@ -48,8 +58,9 @@ class RegisterBody extends StatelessWidget {
                   RegisterFrom(bloc: bloc),
                   state is! RegisterLoadingState
                       ? PublicMainButton(
-                          function: () => bloc.add(RegisterButtonPassEvent()),
-                          text: 'Register')
+                      function: () {
+                        bloc.add(RegisterButtonPassEvent());},
+                      text: 'Register')
                       : const Center(child: CircularProgressIndicator()),
                   const SizedBox(
                     height: 10.0,
